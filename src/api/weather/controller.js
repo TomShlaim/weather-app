@@ -32,4 +32,4 @@ function isCityInArray(cityToCheck, data) {
   return false;
 }
 
-module.exports = { getWeather };
+module.exports = { getWeather, isCityInArray };
