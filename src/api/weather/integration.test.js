@@ -1,20 +1,12 @@
 const request = require("supertest");
-const express = require("express");
+const axios = require("axios");
 
-const app = express();
-const port = 2626;
-
-const server = app.listen(port, () => {
-  console.log(`Example test server listening on port ${port}`);
-});
-
-function close() {
-  server.close();
-}
-
-describe(getName(), () => {
+describe("Weather integration tests", () => {
   test("should return weather data for a valid city", async () => {
-    const response = await request(app).get("/weather/Kabul");
+    const response = await axios.get("http://localhost:2626/weather/Kabul");
+    //Just for sanity check
+    //console.log(response);
+    //It can be changed and that's why I commented it
     // expect(JSON.parse(response.text)).toEqual({
     //   last_updated_epoch: 1691476200,
     //   last_updated: "2023-08-08 11:00",
@@ -46,15 +38,11 @@ describe(getName(), () => {
     // });
   });
   test("should return 404 for an invalid city", async () => {
-    const response = await request(app).get("/weather/Invalid");
-    expect(response.statusCode).toBe(404);
+    try {
+      const response = await axios.get("http://localhost:2626/weather/Kabul2");
+    }
+    catch (error) {
+      expect(error.response.status).toBe(404);
+    }
   });
 });
-
-afterAll(() => {
-  close();
-});
-
-function getName() {
-  return "Some describe name";
-}

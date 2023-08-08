@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node --inspect src/api/server.js",
-    "test": "jest",
+    "start": "node src/api/app.js",
+    "test": "npm run start & jest --coverage",
     "test-NamePattern": "jest -t='should return 404 for an invalid city'",
     "test-pathPattern": "jest --testPathPattern='/*/unit.test.js'",
     "test-coverage": "jest --coverage",

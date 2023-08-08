@@ -1,21 +1,8 @@
-// Import the function to be tested
 const { isCityInArray, getWeather } = require("./controller");
 const axios = require("axios");
 
-// Sample data for testing
-const testData = [
-  {
-    iso2: "AF",
-    iso3: "AFG",
-    country: "Afghanistan",
-    cities: ["Herat", "Kabul"],
-  },
-  // Add more test data entries here...
-];
-
 describe("getWeather function", () => {
   test("should return weather data for a valid city", async () => {
-    console.log('a');
     const citiesResponseMock = [
       {
         iso2: "AF",
@@ -106,7 +93,6 @@ describe("getWeather function", () => {
     // expect(resSendResponse).toBeNull();
   });
   test("should return 404 for an invalid city", async () => {
-    console.log('b');
     const citiesResponseMock = [
       {
         iso2: "AF",
@@ -180,19 +166,27 @@ describe("getWeather function", () => {
     const response = await getWeather(req, res);
 
     expect(res.status).toHaveBeenCalledWith(404);
-    expect(res.send).toHaveBeenCalledWith('City not found');
+    expect(res.send).toHaveBeenCalledWith("City not found");
   });
 });
 describe("isCityInArray function", () => {
+  let testData;
+  beforeAll(() => {
+    testData = [
+      {
+        iso2: "AF",
+        iso3: "AFG",
+        country: "Afghanistan",
+        cities: ["Herat", "Kabul"],
+      },
+    ];
+  });
   test("should return true if city is in the array", () => {
-    console.log('c');
     const cityToCheck = "Kabul";
     const result = isCityInArray(cityToCheck, testData);
     expect(result).toBe(true);
   });
-
   test("should return false if city is not in the array", () => {
-    console.log('d');
     const cityToCheck = "New York";
     const result = isCityInArray(cityToCheck, testData);
     expect(result).toBe(false);
